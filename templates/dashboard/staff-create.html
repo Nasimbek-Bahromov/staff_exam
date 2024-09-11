@@ -1,0 +1,61 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ title }}</h1>
+
+    {% if messages %}
+        <div class="alert alert-info">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="post" action="{% url 'dashboard:staff-create' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="first_name" class="form-label">Ismi</label>
+            <input type="text" class="form-control" id="first_name" name="first_name" required>
+        </div>
+        <div class="mb-3">
+            <label for="last_name" class="form-label">Familiyasi</label>
+            <input type="text" class="form-control" id="last_name" name="last_name" required>
+        </div>
+        <div class="mb-3">
+            <label for="age" class="form-label">Yoshi</label>
+            <input type="number" class="form-control" id="age" name="age" min="0" required>
+        </div>
+        <div class="mb-3">
+            <label for="monthly_salary" class="form-label">Oylik maoshi</label>
+            <input type="number" class="form-control" id="monthly_salary" name="monthly_salary" step="0.01" min="0" required>
+        </div>
+        <div class="mb-3">
+            <label for="workplace" class="form-label">Ishlash joyi</label>
+            <input type="text" class="form-control" id="workplace" name="workplace" required>
+        </div>
+        <div class="mb-3">
+            <label for="phone_number" class="form-label">Telefon raqami</label>
+            <input type="text" class="form-control" id="phone_number" name="phone_number" required>
+        </div>
+        <div class="mb-3">
+            <label for="position" class="form-label">Lavozimi</label>
+            <select class="form-control" id="position" name="position" required>
+                <option value="" disabled selected>Select Position...</option>
+                {% for pos in positions %}
+                    <option value="{{ pos.id }}">{{ pos.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="shifts" class="form-label">Shifts</label>
+            <select multiple class="form-control" id="shifts" name="shift" required>
+                {% for shift in shifts %}
+                    <option value="{{ shift.id }}">{{ shift.start_time }} - {{ shift.end_time }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Xodim yaratish</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<div class="container-fluid">       
+    <div class="row page-titles">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">Davomat</a></li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Davomat Ro'yxati</a></li>
+        </ol>
+    </div>
+
+    <!-- "Davomat olish" button -->
+    <div class="row mb-3">
+        <div class="col-12 d-flex justify-content-start">
+            <a href="{% url 'dashboard:attendance_start' %}" class="btn btn-primary">Davomat olish</a>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>T/r</th>
+                    <th>To'liq ismi</th>
+                    <th>Lavozimi</th>
+                    <th>Kuni</th>
+                    <th>Holati</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for attendance in attendances %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ attendance.staff.get_full_name }}</td>
+                    <td>{{ attendance.staff.position }}</td>
+                    <td>{{ attendance.date }}</td>
+                    <td>
+                        {% if attendance.status == 'Present' %}
+                            <span class="badge badge-success">Keldi</span>
+                        {% elif attendance.status == 'Absent' %}
+                            <span class="badge badge-danger">Kelmadi</span>
+                        {% else %}
+                            <span class="badge badge-warning">Ta'tilda</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

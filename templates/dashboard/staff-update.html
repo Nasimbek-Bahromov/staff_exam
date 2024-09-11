@@ -1,0 +1,61 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title">{{ title }}</h4>
+                <form method="post" action="{% url 'dashboard:staff-update' id=employee.id %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="first_name" class="form-label">Ismi</label>
+                        <input type="text" class="form-control" id="first_name" name="first_name" value="{{ employee.first_name }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="last_name" class="form-label">Familiyasi</label>
+                        <input type="text" class="form-control" id="last_name" name="last_name" value="{{ employee.last_name }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="age" class="form-label">Yoshi</label>
+                        <input type="number" class="form-control" id="age" name="age" value="{{ employee.age }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="monthly_salary" class="form-label">Oylik maoshi</label>
+                        <input type="number" step="0.01" class="form-control" id="monthly_salary" name="monthly_salary" value="{{ employee.monthly_salary }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="workplace" class="form-label">Ishlash joyi</label>
+                        <input type="text" class="form-control" id="workplace" name="workplace" value="{{ employee.workplace }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone_number" class="form-label">Telefon nomeri</label>
+                        <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ employee.phone_number }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="position" class="form-label">Lavozimi</label>
+                        <select class="form-control" id="position" name="position" required>
+                            {% for pos in positions %}
+                                <option value="{{ pos.id }}" {% if pos.id == employee.position.id %}selected{% endif %}>
+                                    {{ pos.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="shifts" class="form-label">Shifts</label>
+                        <select multiple class="form-control" id="shifts" name="shift" required>
+                            {% for shift in shifts %}
+                                <option value="{{ shift.id }}" {% if shift.id in employee_shifts %}selected{% endif %}>
+                                    {{ shift.start_time }} - {{ shift.end_time }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<div class="container-fluid">       
+    <div class="row page-titles">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">Davomat</a></li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Davomat olish</a></li>
+        </ol>
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>To'liq ismi</th>
+                    <th>Lavozimi</th>
+                    <th>Holati</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employee in employees %}
+                <tr>
+                    <td>{{ employee.get_full_name }}</td>
+                    <td>{{ employee.position }}</td>
+                    <td>
+                        <select name="status_{{ employee.id }}">
+                            <option value="Present">Keldi</option>
+                            <option value="Absent">Kelmadi</option>
+                            <option value="Leave">Ta'tilda</option>
+                        </select>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary">Davomatni Saqlash</button>
+    </form>
+</div>
+{% endblock %}
