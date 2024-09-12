@@ -186,32 +186,6 @@ def attendance_start(request):
     }
     return render(request, 'dashboard/attendance_start.html', context)
 
-def attendance_start(request):
-    if request.method == 'POST':
-        
-        employees = Employee.objects.all()
-        today = timezone.now().date()
-
-        for employee in employees:
-           
-            attendance_record, created = StaffAttendance.objects.get_or_create(
-                staff=employee, 
-                date=today
-            )
-            
-            status = request.POST.get(f'status_{employee.id}')
-            if status:
-                attendance_record.status = status
-                attendance_record.save()
-
-        return redirect('dashboard:attendance_list')
-
-    employees = Employee.objects.all()
-    context = {
-        'employees': employees
-    }
-    return render(request, 'dashboard/attendance_start.html', context)
-
 
 @login_required
 def attendance_list(request):

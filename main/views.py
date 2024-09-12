@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from main.models import Employee, Position
+from main.models import Employee, StaffAttendance
 
 
 @login_required
@@ -12,3 +12,4 @@ def dashboard(request):
         staff_members = Employee.objects.exclude(username=current_user.username)
 
     return render(request, 'dashboard/index.html', {'staff_members': staff_members})
+
