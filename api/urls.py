@@ -1,17 +1,14 @@
 from django.urls import path
-from .views import (
-    EmployeeListCreate, EmployeeDetail,
-    StaffShiftListCreate, StaffShiftDetail,
-    StaffAttendanceListCreate, StaffAttendanceDetail
-)
+from . import views
 
 urlpatterns = [
-    path('employees/', EmployeeListCreate.as_view(), name='employee-list-create'),
-    path('employees/<int:pk>/', EmployeeDetail.as_view(), name='employee-detail'),
-    
-    path('staff-shifts/', StaffShiftListCreate.as_view(), name='staff-shift-list-create'),
-    path('staff-shifts/<int:pk>/', StaffShiftDetail.as_view(), name='staff-shift-detail'),
-    
-    path('staff-attendances/', StaffAttendanceListCreate.as_view(), name='staff-attendance-list-create'),
-    path('staff-attendances/<int:pk>/', StaffAttendanceDetail.as_view(), name='staff-attendance-detail'),
+    path('employees/', views.EmployeeListCreateView.as_view(), name='employee-list-create'),
+    path('employees/<int:pk>/', views.EmployeeDetailUpdateDeleteView.as_view(), name='employee-detail-update-delete'),
+    path('positions/', views.PositionListCreateView.as_view(), name='position-list-create'),
+    path('positions/<int:pk>/', views.PositionDetailUpdateDeleteView.as_view(), name='position-detail-update-delete'),
+    path('shifts/', views.ShiftListCreateView.as_view(), name='shift-list-create'),
+    path('shifts/<int:pk>/', views.ShiftDetailUpdateDeleteView.as_view(), name='shift-detail-update-delete'),
+    path('staff-shifts/', views.StaffShiftListCreateView.as_view(), name='staffshift-list-create'),
+    path('staff-shifts/<int:pk>/', views.StaffShiftDetailUpdateDeleteView.as_view(), name='staffshift-detail-update-delete'),
+    path('attendances/', views.StaffAttendanceListView.as_view(), name='attendance-list'),
 ]

@@ -212,6 +212,8 @@ def attendance_start(request):
     }
     return render(request, 'dashboard/attendance_start.html', context)
 
+
+@login_required
 def attendance_list(request):
     attendances = StaffAttendance.objects.all().order_by('-date')
     context = {

@@ -30,7 +30,6 @@ class Employee(AbstractUser):
         return f"{self.first_name} {self.last_name}"
 
     def get_shifts(self):
-        # Xodimga tegishli shiftlarni olish
         shifts = StaffShift.objects.filter(staff=self).select_related('shift')
         return shifts
 
@@ -38,8 +37,6 @@ class Employee(AbstractUser):
         shifts = self.get_shifts()
         return [f"Shift from {shift.shift.start_time} to {shift.shift.end_time} on {shift.date}" for shift in shifts]
  
-
-
 
 class StaffShift(models.Model):
     staff = models.ForeignKey(Employee, on_delete=models.CASCADE)  
